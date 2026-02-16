@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wedding Year Calculator</title>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+            width: 200px;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Wedding Year Calculator</h2>
+
+<input type="number" id="day" placeholder="Birth Day"><br>
+<input type="number" id="month" placeholder="Birth Month"><br>
+<input type="number" id="year" placeholder="Target Year"><br>
+
+<button onclick="calculate()">Check Year</button>
+
+<div id="result"></div>
+
+<script>
+function singleDigit(num) {
+    while (num > 9) {
+        let sum = 0;
+        while (num > 0) {
+            sum += num % 10;
+            num = Math.floor(num / 10);
+        }
+        num = sum;
+    }
+    return num;
+}
+
+function calculate() {
+    let day = parseInt(document.getElementById("day").value);
+    let month = parseInt(document.getElementById("month").value);
+    let year = parseInt(document.getElementById("year").value);
+
+    if (!day || !month || !year) {
+        alert("Please enter all values");
+        return;
+    }
+
+    const compatibility = {
+        1: "1,4,5,7,9",
+        2: "1,2,5,6,8",
+        3: "3,6,7,9",
+        4: "1,2,4,7,8",
+        5: "2,3,5,7,9",
+        6: "1,2,3,5,6,9",
+        7: "1,2,4,8",
+        8: "1,2,4,6,8",
+        9: "1,2,3,6,7"
+    };
+
+    let mulank = singleDigit(day);
+    let step2 = singleDigit(mulank + month);
+    let marriageNumber = singleDigit(singleDigit(year) + step2);
+
+    let compatibleNumbers = compatibility[mulank];
+
+    let message =
+        "Birth Mulank: " + mulank + "<br>" +
+        "Mulank + Month: " + step2 + "<br>" +
+        "Marriage Year Number: " + marriageNumber + "<br>" +
+        "Compatible Numbers: " + compatibleNumbers + "<br><br>";
+
+    if (compatibleNumbers.includes(marriageNumber)) {
+        message += "✅ This year is wedding year.";
+    } else {
+        message += "❌ This year is not wedding year.";
+    }
+
+    document.getElementById("result").innerHTML = message;
+}
+</script>
+
+</body>
+</html>
 
